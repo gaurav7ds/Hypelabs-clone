@@ -121,18 +121,21 @@ const loader = new THREE.TextureLoader()
 
 const planeTexture = loader.load('./texture.png')
 
-const dirLight = new THREE.DirectionalLight(0xffffff, 1)
+// const ambientLight = new THREE.AmbientLight(0xffffff, .1);
+// scene.add(ambientLight);
+
+const dirLight = new THREE.PointLight(0xffffff, 60)
 dirLight.position.set(0, 0, 6)
-const dirLight2 = new THREE.DirectionalLight(0xffffff, 1)
+const dirLight2 = new THREE.PointLight(0xffffff, 200)
 dirLight2.position.set(-5, 5, 0)
-const dirLight3 = new THREE.DirectionalLight(0xffffff, 1)
+const dirLight3 = new THREE.PointLight(0xffffff, 200)
 dirLight3.position.set(5, -5, 0)
-scene.add(dirLight, dirLight2, dirLight3)
+scene.add( dirLight,dirLight2, dirLight3)
 //scene.add(new THREE.AmbientLight(0xffffff, .1));
 
 
 const plane = new THREE.Mesh(
-  new THREE.PlaneGeometry(20, 6),
+  new THREE.PlaneGeometry(25, 11),
   new THREE.MeshBasicMaterial({
     map: planeTexture,
     side: THREE.FrontSide
@@ -148,18 +151,18 @@ let material = null
 
 const params = {
   color: 0xffffff,
-  transmission: .995,
+  transmission: .998,
   opacity: 1,
   metalness: 0,
   roughness: 0.25,
   ior: 1.6,
-  thickness:.23,
-  specularIntensity: .8,
+  thickness:.3,
+  specularIntensity: .9,
   specularColor: 0xffffff,
   dispersion: 20,
 };
 
-gltfLoader.load('./shape.glb', (gltf) => {
+gltfLoader.load('./cm.glb', (gltf) => {
   hologramShape = gltf.scene
   //change materila
   material = new THREE.MeshPhysicalMaterial({
@@ -181,8 +184,9 @@ gltfLoader.load('./shape.glb', (gltf) => {
       child.material = material
     }
   })
-  hologramShape.position.set(0, 0, 0)
-  hologramShape.scale.setScalar(1.6)
+  hologramShape.position.set(0, -.3, -1)
+  hologramShape.scale.setScalar(1.2)
+  hologramShape.rotation.x = -Math.PI / 2
   scene.add(hologramShape)
 })
 
@@ -210,8 +214,8 @@ const mouse = {
 const tick = () => {
   const elapsedTime = clock.getElapsedTime()
   if (hologramShape) {
-    hologramShape.rotation.y = elapsedTime * .4
-    hologramShape.rotation.z = elapsedTime * .6
+    hologramShape.rotation.z = elapsedTime * .8
+    // hologramShape.rotation.z = elapsedTime * .6
     gsap.to(hologramShape.position, {
       x: mouse.x * 2,
 
