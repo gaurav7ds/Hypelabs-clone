@@ -135,7 +135,7 @@ scene.add( dirLight,dirLight2, dirLight3)
 
 
 const plane = new THREE.Mesh(
-  new THREE.PlaneGeometry(25, 11),
+  new THREE.PlaneGeometry(21.5, 18),
   new THREE.MeshBasicMaterial({
     map: planeTexture,
     side: THREE.FrontSide
@@ -217,7 +217,7 @@ const tick = () => {
     hologramShape.rotation.z = elapsedTime * .8
     // hologramShape.rotation.z = elapsedTime * .6
     gsap.to(hologramShape.position, {
-      x: mouse.x * 2,
+      x: mouse.x * 3,
 
       ease: 'power2.out',
       duration: 5
